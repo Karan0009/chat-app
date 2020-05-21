@@ -1,5 +1,6 @@
 #### chat-app
 this is a chat app made with express.js,socket.io,ejs.
+
 **functionalities-**
 * user has a usercolor and a username
 * create a room or join a room

@@ -1,0 +1,32 @@
+<%- include('./includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('./includes/nav.ejs') %>
+    <main class="user-info">
+        <div class="user-color"></div>
+        <form id="user-form" method="get" action="/chat" class="user-login-form">
+            <label for="username">Username</label>
+            <br>
+            <input name="username" onkeyup="checkUsername(event)" type="text" placeholder="username here"
+                class="user-login-form__username" value="" required=true />
+            <br>
+            <!-- <p class="user-login-form__username-error">already exists!</p> -->
+            <label for="roomOption">options</label>
+            <select name="roomOption" class="user-login-form__roomOption_select" onchange="checkRoom(event)">
+                <option class="user-login-form__roomOption_option" value="create">Create room</option>
+                <option class="user-login-form__roomOption_option" value="join">Join room</option>
+            </select>
+            <br>
+            <label for="roomname">Room</label>
+            <br>
+            <input name="roomname" onkeyup="checkRoom(event)" type="text" placeholder="room name"
+                class="user-login-form__roomname" value="" required=true />
+            <br />
+            <p style="visibility:hidden;" class="user-login-form__roomname-error">already exists!</p>
+            <br>
+            <input name="usercolor" type="text" class="user-color-value" style="display: none" value="83c5be" />
+            <button type="submit" enabled class="user-login-form__submitButton">Enter chat</button>
+        </form>
+    </main>
+    <script src="/js/index.js"></script>

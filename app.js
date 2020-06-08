@@ -2,8 +2,6 @@
 const path = require("path");
 const http = require("http");
 const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 
 //utilities
 const {
@@ -17,17 +15,10 @@ const { formatMessage } = require("./utils/message");
 
 require("dotenv").config();
 
-//routes
-const authRoutes = require("./routes/auth");
-const chatRoutes = require("./routes/chat");
-//models
-
 //consts
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
-const db_user = process.env.DB_USER;
-const pass = process.env.DB_PASS;
 
 const rooms = [];
 
@@ -129,5 +120,5 @@ const socketConnection = () => {
 socketConnection();
 
 server.listen(PORT, () => {
-  console.log("server listening on 3000");
+  console.log(`server listening on ${PORT}`);
 });

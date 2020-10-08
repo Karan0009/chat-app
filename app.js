@@ -10,6 +10,7 @@ const {
   deleteUser,
   getRoomUsers,
   getAllUsersExceptCurrent,
+  getAllUsers,
 } = require("./utils/user");
 const { formatMessage } = require("./utils/message");
 
@@ -95,30 +96,39 @@ const socketConnection = () => {
 
       // on client disconnect
       socket.on("disconnect", () => {
-        const user = deleteUser(socket.id);
-        const index = sockets.indexOf(socket);
-        sockets = sockets.filter((s) => {
-          if (sockets.indexOf(s) !== index) return s;
-        });
-        io.to(user.roomname).emit("online users", getRoomUsers(user.roomname));
-        socket.broadcast
-          .to(user.roomname)
-          .emit("user leaves chat", `${user.username} has left the chat`);
+        try {
+          const user = deleteUser(socket.id);
+          if (!user) {
+            socketConnection();
+          }
+          const index = sockets.indexOf(socket);
+          sockets = sockets.filter((s) => {
+            if (sockets.indexOf(s) !== index) return s;
+          });
+          socket
+            .to(user.roomname)
+            .emit("online users", getRoomUsers(user.roomname));
+          socket
+            .to(user.roomname)
+            .emit("user leaves chat", `${user.username} has left the chat`);
 
-        if (getRoomUsers(user.roomname).length === 0) {
-          const index = rooms.findIndex((room) => room === user.roomname);
-          rooms.splice(index, 1);
+          if (getRoomUsers(user.roomname).length === 0) {
+            const index = rooms.findIndex((room) => room === user.roomname);
+            rooms.splice(index, 1);
+          }
+          console.log(`${sockets.length} users online`);
+        } catch (error) {
+          sockets.length = 0;
+          console.log("some error occured");
         }
-        console.log(`${sockets.length} users online`);
       });
     } catch (err) {
-      console.log(err);
+      console.log("some error occured");
     }
   });
 };
 
 socketConnection();
-
 server.listen(PORT, () => {
   console.log(`server listening on ${PORT}`);
 });

@@ -119,7 +119,7 @@ $(function () {
   });
 
   socket.on("online users", (onlineUsers) => {
-    console.log(onlineUsers);
+    console.log(onlineUsers, onlineUsers.length, "updated");
     const usersList = onlineUsers.filter(
       (user) => user.username !== userInfo.username
     );

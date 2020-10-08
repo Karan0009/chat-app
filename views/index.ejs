@@ -2,21 +2,27 @@
 </head>
 
 <body>
+    
     <%- include('./includes/nav.ejs') %>
+    <div class="main-container">
     <main class="user-info">
         <div class="user-color"></div>
         <form id="user-form" method="get" action="/chat" class="user-login-form">
             <label for="username">Username</label>
             <br>
-            <input name="username" onkeyup="checkUsername(event)" type="text" placeholder="username here"
+            <input name="username" onkeyup="checkUsername(event)" type="text" placeholder="username"
                 class="user-login-form__username" value="" required=true />
             <br>
             <!-- <p class="user-login-form__username-error">already exists!</p> -->
             <label for="roomOption">options</label>
-            <select name="roomOption" class="user-login-form__roomOption_select" onchange="checkRoom(event)">
-                <option class="user-login-form__roomOption_option" value="create">Create room</option>
-                <option class="user-login-form__roomOption_option" value="join">Join room</option>
-            </select>
+            <div class="select-container"> 
+                <i class="fas fa-chevron-down down-arrow"></i>
+                <select name="roomOption" class="user-login-form__roomOption_select" onchange="checkRoom(event)">
+                    <option class="user-login-form__roomOption_option" value="create">Create room</option>
+                    <option class="user-login-form__roomOption_option" value="join">Join room</option>
+                </select>
+            </div>
+           
             <br>
             <label for="roomname">Room</label>
             <br>
@@ -29,4 +35,5 @@
             <button type="submit" enabled class="user-login-form__submitButton">Enter chat</button>
         </form>
     </main>
+</div>
     <script src="/js/index.js"></script>

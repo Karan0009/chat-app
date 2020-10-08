@@ -11,9 +11,9 @@ function getCurrentUser(id) {
 }
 
 function deleteUser(id) {
-  const index = users.findIndex((user) => user.id === id);
+  const index = users.findIndex((user) => user.id.toString() === id.toString());
 
-  if (index !== -1) return users.splice(index, 1);
+  if (index !== -1) return users.splice(index, 1)[0];
 }
 
 function getRoomUsers(roomname) {
@@ -25,10 +25,15 @@ function getAllUsersExceptCurrent(id) {
   return result;
 }
 
+function getAllUsers() {
+  return users;
+}
+
 module.exports = {
   joinUser,
   getCurrentUser,
   getAllUsersExceptCurrent,
   deleteUser,
   getRoomUsers,
+  getAllUsers,
 };

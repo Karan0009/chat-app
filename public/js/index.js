@@ -14,7 +14,8 @@ const setRoomErrorVisibility = (factor, roomOption) => {
   else el.innerHTML = "no room found";
   if (!factor) {
     el.style.visibility = "visible";
-    inputEl.style.background = "#e29578";
+    inputEl.style.background = "var(--error-color)";
+    inputEl.style.boxShadow = "0 2px 5px #0b0b4f40";
     buttonEl.removeAttribute("enabled");
     buttonEl.setAttribute("disabled", true);
   } else {
@@ -30,6 +31,9 @@ const checkRoom = (e) => {
   const roomOption = document.querySelector(
     ".user-login-form__roomOption_select"
   ).value;
+  const downArrow = document
+    .querySelector(".down-arrow")
+    .classList.add("down-arrow-clicked");
   console.log(roomname, roomOption);
   fetch("http://localhost:3000/api/isRoomValid", {
     method: "post",
@@ -48,6 +52,18 @@ const checkRoom = (e) => {
       setRoomErrorVisibility(data.isValid, roomOption);
     });
 };
+
+const userLoginSelect = document.querySelector(
+  ".user-login-form__roomOption_select"
+);
+userLoginSelect.addEventListener("click", selectClicked);
+
+function selectClicked(e) {
+  const downArrow = document.querySelector(".down-arrow");
+  if (downArrow.classList.contains("down-arrow-clicked"))
+    downArrow.classList.remove("down-arrow-clicked");
+  else downArrow.classList.add("down-arrow-clicked");
+}
 
 let color = "";
 
